@@ -12,12 +12,14 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
   const [nombre, setNombre] = useState('');
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [codigoPostal, setCodigoPostal] = useState(''); 
 
   useEffect(() => {
     if (initialData) {
       setNombre(initialData.nombre);
       setDireccion(initialData.direccion || '');
       setTelefono(initialData.telefono || '');
+      setCodigoPostal(initialData.codigo_postal || ''); 
     }
   }, [initialData]);
 
@@ -81,6 +83,20 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
           onChange={(e) => setTelefono(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           placeholder="Ingrese el teléfono (opcional)"
+          disabled={loading}
+        />
+      </div>
+      <div>
+        <label htmlFor="codigo_postal" className="block text-sm font-medium text-gray-700">
+          Código Postal
+        </label>
+        <input
+          type="text"
+          id="codigo_postal"
+          value={codigoPostal}
+          onChange={(e) => setCodigoPostal(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese el código postal (opcional)"
           disabled={loading}
         />
       </div>

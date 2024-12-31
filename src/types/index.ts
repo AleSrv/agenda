@@ -3,6 +3,7 @@ export interface Persona {
   nombre: string;
   direccion?: string;
   telefono?: string;
+  codigo_postal?: string;
   created_at: string;
   updated_at: string;
 }
@@ -11,6 +12,7 @@ export interface PersonaInput {
   nombre: string;
   direccion?: string;
   telefono?: string;
+  codigo_postal?: string;
 }
 
 export interface PersonasContextType {

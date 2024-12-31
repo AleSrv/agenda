@@ -4,13 +4,13 @@ import { usePersonas } from '../hooks/usePersonas';
 import { PersonaItem } from './PersonaItem';
 
 export function Lista() {
-  const { 
-    personas, 
-    cargando, 
-    error, 
-    obtenerListaPersonas, 
+  const {
+    personas,
+    cargando,
+    error,
+    obtenerListaPersonas,
     borrarPersona,
-    modificarPersona 
+    modificarPersona
   } = usePersonas();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export function Lista() {
           disabled={cargando}
           className="p-2 text-gray-600 hover:text-gray-900 rounded-full hover:bg-gray-100"
         >
-          <RefreshCw className={`w-5 h-5 ${cargando ? 'animate-spin' : ''}`} />
+          <RefreshCw className={`w-8 h-8 ${cargando ? 'animate-spin' : ''}`} />
         </button>
       </div>
 

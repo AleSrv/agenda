@@ -22,7 +22,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
     return (
       <li className="py-4">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium">Editar Persona</h3>
+          <h3 className="text-lg font-medium text-red-600">Editar Cliente</h3>
           <button
             onClick={() => setIsEditing(false)}
             className="p-2 text-gray-600 hover:text-gray-900 rounded-full hover:bg-gray-100"
@@ -50,6 +50,9 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
         )}
         {persona.telefono && (
           <p className="text-sm text-gray-600">{persona.telefono}</p>
+        )}
+        {persona.codigo_postal && (
+          <p className="text-sm text-gray-600">{persona.codigo_postal}</p>
         )}
         <p className="text-sm text-gray-500">
           Agregado: {new Date(persona.created_at).toLocaleDateString()}

@@ -9,6 +9,7 @@ export function PersonasProvider({ children }: { children: React.ReactNode }) {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // (GET) useCallback para evitar que la función se cree en cada renderizado
   const obtenerListaPersonas = useCallback(async () => {
     try {
       setCargando(true);
@@ -22,6 +23,7 @@ export function PersonasProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // (POST) 
   const agregarPersona = useCallback(async (persona: PersonaInput) => {
     try {
       setCargando(true);
@@ -36,6 +38,7 @@ export function PersonasProvider({ children }: { children: React.ReactNode }) {
     }
   }, [obtenerListaPersonas]);
 
+  // (PUT)
   const modificarPersona = useCallback(async (id: string, persona: PersonaInput) => {
     try {
       setCargando(true);
@@ -50,6 +53,7 @@ export function PersonasProvider({ children }: { children: React.ReactNode }) {
     }
   }, [obtenerListaPersonas]);
 
+  // (DELETE)
   const borrarPersona = useCallback(async (id: string) => {
     try {
       setCargando(true);
