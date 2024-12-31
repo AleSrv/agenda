@@ -63,6 +63,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
           title="Editar"
         >
           <Pencil className="w-5 h-5" />
+        </button>
         <button
           onClick={() => onDelete(persona.id)}
           disabled={loading}
@@ -70,7 +71,6 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
           title="Eliminar"
         >
           <Trash2 className="w-5 h-5" />
-        </button>
         </button>
       </div>
     </li>
