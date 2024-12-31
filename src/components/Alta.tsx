@@ -28,7 +28,7 @@ export function Alta() {
       {show && (
         <PersonaForm
           onSubmit={handleAgregarPersona}
-          submitText="Agregar Persona"
+          submitText="Agregar Cliente"
           loading={cargando}
         />
       )}
