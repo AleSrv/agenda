@@ -1,9 +1,17 @@
-import  { useEffect } from 'react';
-import { Users, Trash2, RefreshCw } from 'lucide-react';
-import { usePersonas } from '../context/PersonasContext';
+import { useEffect } from 'react';
+import { Users, RefreshCw } from 'lucide-react';
+import { usePersonas } from '../hooks/usePersonas';
+import { PersonaItem } from './PersonaItem';
 
 export function Lista() {
-  const { personas, cargando, error, obtenerListaPersonas, borrarPersona } = usePersonas();
+  const { 
+    personas, 
+    cargando, 
+    error, 
+    obtenerListaPersonas, 
+    borrarPersona,
+    modificarPersona 
+  } = usePersonas();
 
   useEffect(() => {
     obtenerListaPersonas();
@@ -25,7 +33,7 @@ export function Lista() {
           Lista de Personas
         </h2>
         <button
-          title="Actualizar lista"
+          title="Refresh list"
           onClick={() => obtenerListaPersonas()}
           disabled={cargando}
           className="p-2 text-gray-600 hover:text-gray-900 rounded-full hover:bg-gray-100"
@@ -34,7 +42,7 @@ export function Lista() {
         </button>
       </div>
 
-      {cargando ? (
+      {cargando && personas.length === 0 ? (
         <div className="text-center p-4">Cargando...</div>
       ) : personas.length === 0 ? (
         <div className="text-center text-gray-500 p-4">
@@ -43,27 +51,13 @@ export function Lista() {
       ) : (
         <ul className="divide-y divide-gray-200">
           {personas.map((persona) => (
-            <li key={persona.id} className="py-4 flex justify-between items-center">
-              <div>
-                <p className="text-sm font-medium text-gray-900">{persona.nombre}</p>
-                {persona.direccion && (
-                  <p className="text-sm text-gray-600">{persona.direccion}</p>
-                )}
-                {persona.telefono && (
-                  <p className="text-sm text-gray-600">{persona.telefono}</p>
-                )}
-                <p className="text-sm text-gray-500">
-                  Agregado: {new Date(persona.created_at).toLocaleDateString()}
-                </p>
-              </div>
-              <button
-                title="Borrar persona"
-                onClick={() => borrarPersona(persona.id)}
-                className="p-2 text-red-600 hover:text-red-900 rounded-full hover:bg-red-50"
-              >
-                <Trash2 className="w-5 h-5" />
-              </button>
-            </li>
+            <PersonaItem
+              key={persona.id}
+              persona={persona}
+              onDelete={borrarPersona}
+              onUpdate={modificarPersona}
+              loading={cargando}
+            />
           ))}
         </ul>
       )}

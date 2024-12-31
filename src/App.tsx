@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { PersonasProvider } from './context/PersonasContext';
+import { PersonasProvider } from './context/PersonasProvider';
 import { Alta } from './components/Alta';
 import { Lista } from './components/Lista';
 import Login from './components/Login';

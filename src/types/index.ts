@@ -12,3 +12,13 @@ export interface PersonaInput {
   direccion?: string;
   telefono?: string;
 }
+
+export interface PersonasContextType {
+  personas: Persona[];
+  cargando: boolean;
+  error: string | null;
+  obtenerListaPersonas: () => Promise<void>;
+  agregarPersona: (persona: PersonaInput) => Promise<void>;
+  modificarPersona: (id: string, persona: PersonaInput) => Promise<void>;
+  borrarPersona: (id: string) => Promise<void>;
+}

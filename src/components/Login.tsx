@@ -7,10 +7,13 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin(username, password);
+    setLoading(true);
+    await onLogin(username, password);
+    setLoading(false);
   };
 
   return (
@@ -41,8 +44,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>
-        <button type="submit" className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md">
-          Login
+        <button
+          type="submit"
+          className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md"
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : 'Login'}
         </button>
       </form>
     </div>
