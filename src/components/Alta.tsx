@@ -9,7 +9,7 @@ export function Alta() {
     <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
         <UserPlus className="w-6 h-6" />
-        Agregar Persona
+        Agregar Cliente
       </h2>
       <PersonaForm
         onSubmit={agregarPersona}
