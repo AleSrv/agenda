@@ -54,6 +54,15 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
         {persona.codigo_postal && (
           <p className="text-sm text-gray-600">{persona.codigo_postal}</p>
         )}
+        {persona.descripcion && (
+          <p className="text-sm text-gray-600">{persona.descripcion}</p>
+        )}
+        {persona.importe_a_cobrar !== undefined && (
+          <p className="text-sm text-gray-600">Importe a Cobrar: ${persona.importe_a_cobrar}</p>
+        )}
+        {persona.soporte_tv && (
+          <p className="text-sm text-gray-600">Soporte TV: Sí</p>
+        )}
         <p className="text-sm text-gray-500">
           Agregado: {new Date(persona.created_at).toLocaleDateString()}
         </p>

@@ -1,7 +1,6 @@
 import { supabase } from '../lib/supabase';
 import type { Persona, PersonaInput } from '../types';
 
-//(GET)
 export async function obtenerPersonas(): Promise<Persona[]> {
   const { data, error } = await supabase
     .from('personas')
@@ -12,7 +11,6 @@ export async function obtenerPersonas(): Promise<Persona[]> {
   return data;
 }
 
-//(POST)
 export async function crearPersona(persona: PersonaInput): Promise<Persona> {
   const { data, error } = await supabase
     .from('personas')
@@ -24,7 +22,6 @@ export async function crearPersona(persona: PersonaInput): Promise<Persona> {
   return data;
 }
 
-//(PUT)
 export async function actualizarPersona(id: string, persona: PersonaInput): Promise<Persona> {
   const { data, error } = await supabase
     .from('personas')
@@ -37,7 +34,6 @@ export async function actualizarPersona(id: string, persona: PersonaInput): Prom
   return data;
 }
 
-//(DELETE)
 export async function eliminarPersona(id: string): Promise<void> {
   const { error } = await supabase
     .from('personas')
