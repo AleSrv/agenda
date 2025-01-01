@@ -44,31 +44,19 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
   return (
     <li className="py-4 flex justify-between items-center">
       <div>
-        <p className="text-sm font-medium text-gray-900">Nombre: {persona.nombre}</p>
-        {persona.direccion && (
-          <p className="text-sm text-gray-600">Dirección: {persona.direccion}</p>
-        )}
-        {persona.telefono && (
-          <p className="text-sm text-gray-600">Teléfono: {persona.telefono}</p>
-        )}
-        {persona.codigo_postal && (
-          <p className="text-sm text-gray-600">Código Postal: {persona.codigo_postal}</p>
-        )}
-        {persona.descripcion && (
-          <p className="text-sm text-gray-600">Descripción: {persona.descripcion}</p>
-        )}
-        {persona.importe_a_cobrar !== undefined && (
-          <p className="text-sm text-gray-600">Importe a Cobrar: ${persona.importe_a_cobrar}</p>
-        )}
-        {persona.soporte_tv && (
-          <p className="text-sm text-gray-600">Soporte TV: Sí</p>
-        )}
-        {persona.fecha_fijada && (
-          <p className="text-sm text-gray-600">Fecha Fijada: {new Date(persona.fecha_fijada).toLocaleDateString()}</p>
-        )}
-        <p className="text-sm text-gray-500">
-          Agregado: {new Date(persona.created_at).toLocaleDateString()}
+        <p className="text-sm font-medium text-gray-900">
+          Nombre: {persona.nombre}
+          <span className="ml-4 text-sm text-gray-600">
+            Fecha Fijada: {persona.fecha_fijada ? new Date(persona.fecha_fijada).toLocaleDateString() : 'Sin datos'}
+          </span>
         </p>
+        <p className="text-sm text-gray-600">Dirección: {persona.direccion || 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Teléfono: {persona.telefono || 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Código Postal: {persona.codigo_postal || 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Descripción: {persona.descripcion || 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Importe a Cobrar: {persona.importe_a_cobrar !== undefined ? `$${persona.importe_a_cobrar}` : 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Necesita Soporte TV: {persona.soporte_tv !== undefined ? (persona.soporte_tv ? 'Sí' : 'No') : 'Sin datos'}</p>
+        <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
       </div>
       <div className="flex gap-2">
         <button

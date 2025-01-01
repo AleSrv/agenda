@@ -155,7 +155,7 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
           disabled={loading}
         />
         <label htmlFor="soporte_tv" className="ml-2 block text-sm font-medium text-gray-700">
-          Soporte TV
+          Necesita Soporte TV?
         </label>
       </div>
       <div>
