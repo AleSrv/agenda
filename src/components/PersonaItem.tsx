@@ -18,6 +18,8 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
     setIsEditing(false);
   };
 
+  const isFechaPasada = persona.fecha_fijada && new Date(persona.fecha_fijada) < new Date();
+
   if (isEditing) {
     return (
       <li className="py-4">
@@ -42,7 +44,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
   }
 
   return (
-    <li className="py-4 flex justify-between items-center">
+    <li className={`py-4 flex justify-between items-center ${isFechaPasada ? 'bg-red-100' : ''}`}>
       <div>
         <p className="text-sm font-medium text-gray-900">
           Nombre: {persona.nombre}
