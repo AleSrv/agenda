@@ -45,7 +45,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
   }
 
   return (
-    <li className={`py-4 flex justify-between items-center ${isFechaPasada ? 'bg-red-100' : ''}`}>
+    <li className={`p-4 flex justify-between items-center ${isFechaPasada ? 'bg-red-100' : ''}`}>
       <div>
         <p className="text-sm font-medium text-gray-900">
           Nombre: {persona.nombre}
