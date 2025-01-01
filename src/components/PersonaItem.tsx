@@ -18,12 +18,21 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
     setIsEditing(false);
   };
 
-  // Verificar si la fecha fijada ha pasado o si no tiene fecha fijada
-  const isFechaPasada = !persona.fecha_fijada || new Date(persona.fecha_fijada) < new Date();
+  const today = new Date();
+  const fechaFijada = persona.fecha_fijada ? new Date(persona.fecha_fijada) : null;
+  const isFechaPasada = fechaFijada && fechaFijada < today;
+  const isFechaProxima = fechaFijada && fechaFijada >= today && fechaFijada <= new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
+
+  let bgColorClass = '';
+  if (isFechaPasada) {
+    bgColorClass = 'bg-red-100';
+  } else if (isFechaProxima) {
+    bgColorClass = 'bg-orange-100';
+  }
 
   if (isEditing) {
     return (
-      <li className="py-4">
+      <li className="p-4 mb-4">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium text-red-600">Editar Cliente</h3>
           <button
@@ -45,7 +54,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
   }
 
   return (
-    <li className={`p-4 flex justify-between rounded items-center ${isFechaPasada ? 'bg-red-100' : ''}`}>
+    <li className={`p-4 mb-4 flex justify-between rounded items-center ${bgColorClass}`}>
       <div>
         <p className="text-sm font-medium text-gray-900">
           Nombre: {persona.nombre}
