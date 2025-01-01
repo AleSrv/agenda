@@ -18,7 +18,8 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
     setIsEditing(false);
   };
 
-  const isFechaPasada = persona.fecha_fijada && new Date(persona.fecha_fijada) < new Date();
+  // Verificar si la fecha fijada ha pasado o si no tiene fecha fijada
+  const isFechaPasada = !persona.fecha_fijada || new Date(persona.fecha_fijada) < new Date();
 
   if (isEditing) {
     return (
