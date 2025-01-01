@@ -4,9 +4,10 @@ export interface Persona {
   direccion?: string;
   telefono?: string;
   codigo_postal?: string;
-  descripcion?: string; // Nuevo campo
-  importe_a_cobrar?: number; // Nuevo campo
-  soporte_tv?: boolean; // Nuevo campo
+  descripcion?: string;
+  importe_a_cobrar?: number;
+  soporte_tv?: boolean;
+  fecha_fijada?: string; // Nuevo campo
   created_at: string;
   updated_at: string;
 }
@@ -16,9 +17,10 @@ export interface PersonaInput {
   direccion?: string;
   telefono?: string;
   codigo_postal?: string;
-  descripcion?: string; // Nuevo campo
-  importe_a_cobrar?: number; // Nuevo campo
-  soporte_tv?: boolean; // Nuevo campo
+  descripcion?: string;
+  importe_a_cobrar?: number;
+  soporte_tv?: boolean;
+  fecha_fijada?: string; // Nuevo campo
 }
 
 export interface PersonasContextType {

@@ -5,7 +5,7 @@ export async function obtenerPersonas(): Promise<Persona[]> {
   const { data, error } = await supabase
     .from('personas')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('fecha_fijada', { ascending: true });
 
   if (error) throw error;
   return data;

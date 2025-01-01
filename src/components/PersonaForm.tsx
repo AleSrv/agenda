@@ -13,9 +13,10 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
   const [codigoPostal, setCodigoPostal] = useState('');
-  const [descripcion, setDescripcion] = useState(''); // Nuevo estado
-  const [importeACobrar, setImporteACobrar] = useState<number | undefined>(undefined); // Nuevo estado
-  const [soporteTv, setSoporteTv] = useState(false); // Nuevo estado
+  const [descripcion, setDescripcion] = useState('');
+  const [importeACobrar, setImporteACobrar] = useState<number | undefined>(undefined);
+  const [soporteTv, setSoporteTv] = useState(false);
+  const [fechaFijada, setFechaFijada] = useState(''); // Nuevo estado
 
   useEffect(() => {
     if (initialData) {
@@ -23,9 +24,10 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       setDireccion(initialData.direccion || '');
       setTelefono(initialData.telefono || '');
       setCodigoPostal(initialData.codigo_postal || '');
-      setDescripcion(initialData.descripcion || ''); // Inicializar nuevo estado
-      setImporteACobrar(initialData.importe_a_cobrar); // Inicializar nuevo estado
-      setSoporteTv(initialData.soporte_tv || false); // Inicializar nuevo estado
+      setDescripcion(initialData.descripcion || '');
+      setImporteACobrar(initialData.importe_a_cobrar);
+      setSoporteTv(initialData.soporte_tv || false);
+      setFechaFijada(initialData.fecha_fijada || ''); // Inicializar nuevo estado
     }
   }, [initialData]);
 
@@ -38,9 +40,10 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       direccion: direccion.trim() || undefined,
       telefono: telefono.trim() || undefined,
       codigo_postal: codigoPostal.trim() || undefined,
-      descripcion: descripcion.trim() || undefined, // Incluir nuevo campo
-      importe_a_cobrar: importeACobrar, // Incluir nuevo campo
-      soporte_tv: soporteTv, // Incluir nuevo campo
+      descripcion: descripcion.trim() || undefined,
+      importe_a_cobrar: importeACobrar,
+      soporte_tv: soporteTv,
+      fecha_fijada: fechaFijada || undefined, // Incluir nuevo campo
     };
 
     await onSubmit(personaData);
@@ -50,9 +53,10 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       setDireccion('');
       setTelefono('');
       setCodigoPostal('');
-      setDescripcion(''); // Resetear nuevo estado
-      setImporteACobrar(undefined); // Resetear nuevo estado
-      setSoporteTv(false); // Resetear nuevo estado
+      setDescripcion('');
+      setImporteACobrar(undefined);
+      setSoporteTv(false);
+      setFechaFijada(''); // Resetear nuevo estado
     }
   };
 
@@ -153,6 +157,20 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
         <label htmlFor="soporte_tv" className="ml-2 block text-sm font-medium text-gray-700">
           Soporte TV
         </label>
+      </div>
+      <div>
+        <label htmlFor="fecha_fijada" className="block text-sm font-medium text-gray-700">
+          Fecha Fijada
+        </label>
+        <input
+          type="date"
+          id="fecha_fijada"
+          value={fechaFijada}
+          onChange={(e) => setFechaFijada(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese la fecha fijada (opcional)"
+          disabled={loading}
+        />
       </div>
       <button
         type="submit"
