@@ -16,7 +16,9 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
   const [descripcion, setDescripcion] = useState('');
   const [importeACobrar, setImporteACobrar] = useState<number | undefined>(undefined);
   const [soporteTv, setSoporteTv] = useState(false);
-  const [fechaFijada, setFechaFijada] = useState(''); // Nuevo estado
+  const [fechaFijada, setFechaFijada] = useState('');
+  const [modeloTv, setModeloTv] = useState(''); // Nuevo estado
+  const [ticketEci, setTicketEci] = useState(''); // Nuevo estado
 
   useEffect(() => {
     if (initialData) {
@@ -27,7 +29,9 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       setDescripcion(initialData.descripcion || '');
       setImporteACobrar(initialData.importe_a_cobrar);
       setSoporteTv(initialData.soporte_tv || false);
-      setFechaFijada(initialData.fecha_fijada || ''); // Inicializar nuevo estado
+      setFechaFijada(initialData.fecha_fijada || '');
+      setModeloTv(initialData.modelo_tv || ''); // Inicializar nuevo estado
+      setTicketEci(initialData.ticket_eci || ''); // Inicializar nuevo estado
     }
   }, [initialData]);
 
@@ -43,7 +47,9 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       descripcion: descripcion.trim() || undefined,
       importe_a_cobrar: importeACobrar,
       soporte_tv: soporteTv,
-      fecha_fijada: fechaFijada || undefined, // Incluir nuevo campo
+      fecha_fijada: fechaFijada || undefined,
+      modelo_tv: modeloTv || undefined, // Incluir nuevo campo
+      ticket_eci: ticketEci || undefined, // Incluir nuevo campo
     };
 
     await onSubmit(personaData);
@@ -56,7 +62,9 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       setDescripcion('');
       setImporteACobrar(undefined);
       setSoporteTv(false);
-      setFechaFijada(''); // Resetear nuevo estado
+      setFechaFijada('');
+      setModeloTv(''); // Resetear nuevo estado
+      setTicketEci(''); // Resetear nuevo estado
     }
   };
 
@@ -169,6 +177,34 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
           onChange={(e) => setFechaFijada(e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           placeholder="Ingrese la fecha fijada (opcional)"
+          disabled={loading}
+        />
+      </div>
+      <div>
+        <label htmlFor="modelo_tv" className="block text-sm font-medium text-gray-700">
+          Modelo TV
+        </label>
+        <input
+          type="text"
+          id="modelo_tv"
+          value={modeloTv}
+          onChange={(e) => setModeloTv(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese el modelo de TV (opcional)"
+          disabled={loading}
+        />
+      </div>
+      <div>
+        <label htmlFor="ticket_eci" className="block text-sm font-medium text-gray-700">
+          Ticket ECI
+        </label>
+        <input
+          type="text"
+          id="ticket_eci"
+          value={ticketEci}
+          onChange={(e) => setTicketEci(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese el ticket ECI (opcional)"
           disabled={loading}
         />
       </div>

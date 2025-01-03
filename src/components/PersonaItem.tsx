@@ -22,9 +22,10 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
   const fechaFijada = persona.fecha_fijada ? new Date(persona.fecha_fijada) : null;
   const isFechaPasada = fechaFijada && fechaFijada < today;
   const isFechaProxima = fechaFijada && fechaFijada >= today && fechaFijada <= new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
+  const isSinFecha = !persona.fecha_fijada;
 
   let bgColorClass = '';
-  if (isFechaPasada) {
+  if (isFechaPasada || isSinFecha) {
     bgColorClass = 'bg-red-100';
   } else if (isFechaProxima) {
     bgColorClass = 'bg-orange-100';
@@ -68,6 +69,8 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
         <p className="text-sm text-gray-600">Descripción: {persona.descripcion || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Importe a Cobrar: {persona.importe_a_cobrar !== undefined ? `$${persona.importe_a_cobrar}` : 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Necesita Soporte TV: {persona.soporte_tv !== undefined ? (persona.soporte_tv ? 'Sí' : 'No') : 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Modelo TV: {persona.modelo_tv || 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Ticket ECI: {persona.ticket_eci || 'Sin datos'}</p>
         <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
       </div>
       <div className="flex gap-2">

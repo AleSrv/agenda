@@ -7,7 +7,9 @@ export interface Persona {
   descripcion?: string;
   importe_a_cobrar?: number;
   soporte_tv?: boolean;
-  fecha_fijada?: string; // Nuevo campo
+  fecha_fijada?: string;
+  modelo_tv?: string; // Nuevo campo
+  ticket_eci?: string; // Nuevo campo
   created_at: string;
   updated_at: string;
 }
@@ -20,7 +22,9 @@ export interface PersonaInput {
   descripcion?: string;
   importe_a_cobrar?: number;
   soporte_tv?: boolean;
-  fecha_fijada?: string; // Nuevo campo
+  fecha_fijada?: string;
+  modelo_tv?: string; // Nuevo campo
+  ticket_eci?: string; // Nuevo campo
 }
 
 export interface PersonasContextType {
