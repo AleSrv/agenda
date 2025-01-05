@@ -63,14 +63,17 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
             (Fecha Fijada: {persona.fecha_fijada ? new Date(persona.fecha_fijada).toLocaleDateString() : <span className="text-red-600">Sin datos</span>})
           </span>
         </p>
-        <hr className="my-2" />
+        <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
+        <hr className="my-2 bg-inherit" />
         <p className="text-sm text-gray-600">Dirección: {persona.direccion || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Teléfono: {persona.telefono || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Código Postal: {persona.codigo_postal || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Descripción: {persona.descripcion || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Importe a Cobrar: {persona.importe_a_cobrar !== undefined && persona.importe_a_cobrar !== null ? `${persona.importe_a_cobrar}€` : 'Sin Cerrar'}</p>
+        <p className="text-sm text-gray-600">Modelo Tv / Soundbar: {persona.modelo_tv}</p>
         <p className="text-sm text-gray-600">Necesita Soporte TV: {persona.soporte_tv !== undefined ? (persona.soporte_tv ? 'Sí' : 'No') : 'Sin datos'}</p>
-        <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
+        <p className="text-sm text-gray-600">Ticket ECI: {persona.ticket_eci}</p>
+
       </div>
       <div className="flex gap-2">
         <button
