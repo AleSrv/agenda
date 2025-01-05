@@ -8,11 +8,13 @@ export interface Persona {
   importe_a_cobrar?: number;
   soporte_tv?: boolean;
   fecha_fijada?: string;
-  modelo_tv?: string; // Nuevo campo
-  ticket_eci?: string; // Nuevo campo
+  terminado?: boolean;
+  servicio: 'instalacion' | 'reparacion';
+  garantia: 'SI' | 'NO' | 'SIN DETERMINAR'; // Nuevo campo
   created_at: string;
   updated_at: string;
-  servicio: "instalacion" | "reparacion"; // Nuevo campo
+  modelo_tv?: string;
+  ticket_eci?: string;
 }
 
 export interface PersonaInput {
@@ -24,9 +26,11 @@ export interface PersonaInput {
   importe_a_cobrar?: number;
   soporte_tv?: boolean;
   fecha_fijada?: string;
-  modelo_tv?: string; // Nuevo campo
-  ticket_eci?: string; // Nuevo campo
-  servicio: "instalacion" | "reparacion"; // Nuevo campo
+  terminado?: boolean;
+  servicio: 'instalacion' | 'reparacion';
+  garantia: 'SI' | 'NO' | 'SIN DETERMINAR'; // Nuevo campo
+  modelo_tv?: string;
+  ticket_eci?: string;
 }
 
 export interface PersonasContextType {

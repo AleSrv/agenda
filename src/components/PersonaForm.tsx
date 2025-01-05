@@ -19,7 +19,8 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
   const [fechaFijada, setFechaFijada] = useState('');
   const [modeloTv, setModeloTv] = useState('');
   const [ticketEci, setTicketEci] = useState('');
-  const [servicio, setServicio] = useState<'instalacion' | 'reparacion'>('reparacion'); // Inicializar nuevo estado
+  const [servicio, setServicio] = useState<'instalacion' | 'reparacion'>('instalacion');
+  const [garantia, setGarantia] = useState<'SI' | 'NO' | 'SIN DETERMINAR'>('SIN DETERMINAR'); 
 
   useEffect(() => {
     if (initialData) {
@@ -33,7 +34,8 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setFechaFijada(initialData.fecha_fijada || '');
       setModeloTv(initialData.modelo_tv || '');
       setTicketEci(initialData.ticket_eci || '');
-      setServicio(initialData.servicio || 'instalacion'); // Inicializar nuevo estado
+      setServicio(initialData.servicio || 'instalacion');
+      setGarantia(initialData.garantia || 'SIN DETERMINAR'); // Inicializar nuevo estado
     }
   }, [initialData]);
 
@@ -52,7 +54,8 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       fecha_fijada: fechaFijada || undefined,
       modelo_tv: modeloTv || undefined,
       ticket_eci: ticketEci || undefined,
-      servicio, // Incluir nuevo campo
+      servicio,
+      garantia, // Incluir nuevo campo
     };
 
     await onSubmit(personaData);
@@ -68,7 +71,8 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setFechaFijada('');
       setModeloTv('');
       setTicketEci('');
-      setServicio('instalacion'); // Restablecer nuevo estado
+      setServicio('instalacion');
+      setGarantia('SIN DETERMINAR'); // Restablecer nuevo estado
     }
   };
 
@@ -86,6 +90,21 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
         >
           <option value="instalacion">Instalación</option>
           <option value="reparacion">Reparación</option>
+        </select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="garantia">
+          Garantía
+        </label>
+        <select
+          id="garantia"
+          value={garantia}
+          onChange={(e) => setGarantia(e.target.value as 'SI' | 'NO' | 'SIN DETERMINAR')}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option value="SIN DETERMINAR">SIN DETERMINAR</option>
+          <option value="SI">SI</option>
+          <option value="NO">NO</option>
         </select>
       </div>
       <div>
