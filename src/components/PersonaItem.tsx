@@ -58,7 +58,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
     <li className={`p-4 mb-4 flex justify-between rounded items-center ${bgColorClass}`}>
       <div>
         <p className="text-sm font-medium text-gray-900">
-          Nombre: {persona.nombre}
+          {persona.servicio.toUpperCase()}: {persona.nombre}
           <span className="ml-4 text-sm text-gray-600">
             Fecha Fijada: {persona.fecha_fijada ? new Date(persona.fecha_fijada).toLocaleDateString() : 'Sin datos'}
           </span>
@@ -69,8 +69,6 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
         <p className="text-sm text-gray-600">Descripción: {persona.descripcion || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Importe a Cobrar: {persona.importe_a_cobrar !== undefined ? `$${persona.importe_a_cobrar}` : 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Necesita Soporte TV: {persona.soporte_tv !== undefined ? (persona.soporte_tv ? 'Sí' : 'No') : 'Sin datos'}</p>
-        <p className="text-sm text-gray-600">Modelo TV: {persona.modelo_tv || 'Sin datos'}</p>
-        <p className="text-sm text-gray-600">Ticket ECI: {persona.ticket_eci || 'Sin datos'}</p>
         <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
       </div>
       <div className="flex gap-2">

@@ -12,6 +12,7 @@ export interface Persona {
   ticket_eci?: string; // Nuevo campo
   created_at: string;
   updated_at: string;
+  servicio: "instalacion" | "reparacion"; // Nuevo campo
 }
 
 export interface PersonaInput {
@@ -25,6 +26,7 @@ export interface PersonaInput {
   fecha_fijada?: string;
   modelo_tv?: string; // Nuevo campo
   ticket_eci?: string; // Nuevo campo
+  servicio: "instalacion" | "reparacion"; // Nuevo campo
 }
 
 export interface PersonasContextType {

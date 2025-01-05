@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import type { PersonaInput } from '../types';
+import { PersonaInput } from '../types';
 
 interface PersonaFormProps {
-  onSubmit: (persona: PersonaInput) => Promise<void>;
   initialData?: PersonaInput;
+  onSubmit: (data: PersonaInput) => Promise<void>;
   submitText: string;
   loading: boolean;
 }
 
-export function PersonaForm({ onSubmit, initialData, submitText, loading }: PersonaFormProps) {
+export function PersonaForm({ initialData, onSubmit, submitText, loading }: PersonaFormProps) {
   const [nombre, setNombre] = useState('');
   const [direccion, setDireccion] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -17,8 +17,9 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
   const [importeACobrar, setImporteACobrar] = useState<number | undefined>(undefined);
   const [soporteTv, setSoporteTv] = useState(false);
   const [fechaFijada, setFechaFijada] = useState('');
-  const [modeloTv, setModeloTv] = useState(''); // Nuevo estado
-  const [ticketEci, setTicketEci] = useState(''); // Nuevo estado
+  const [modeloTv, setModeloTv] = useState('');
+  const [ticketEci, setTicketEci] = useState('');
+  const [servicio, setServicio] = useState<'instalacion' | 'reparacion'>('reparacion'); // Inicializar nuevo estado
 
   useEffect(() => {
     if (initialData) {
@@ -30,8 +31,9 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       setImporteACobrar(initialData.importe_a_cobrar);
       setSoporteTv(initialData.soporte_tv || false);
       setFechaFijada(initialData.fecha_fijada || '');
-      setModeloTv(initialData.modelo_tv || ''); // Inicializar nuevo estado
-      setTicketEci(initialData.ticket_eci || ''); // Inicializar nuevo estado
+      setModeloTv(initialData.modelo_tv || '');
+      setTicketEci(initialData.ticket_eci || '');
+      setServicio(initialData.servicio || 'instalacion'); // Inicializar nuevo estado
     }
   }, [initialData]);
 
@@ -48,8 +50,9 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       importe_a_cobrar: importeACobrar,
       soporte_tv: soporteTv,
       fecha_fijada: fechaFijada || undefined,
-      modelo_tv: modeloTv || undefined, // Incluir nuevo campo
-      ticket_eci: ticketEci || undefined, // Incluir nuevo campo
+      modelo_tv: modeloTv || undefined,
+      ticket_eci: ticketEci || undefined,
+      servicio, // Incluir nuevo campo
     };
 
     await onSubmit(personaData);
@@ -63,13 +66,28 @@ export function PersonaForm({ onSubmit, initialData, submitText, loading }: Pers
       setImporteACobrar(undefined);
       setSoporteTv(false);
       setFechaFijada('');
-      setModeloTv(''); // Resetear nuevo estado
-      setTicketEci(''); // Resetear nuevo estado
+      setModeloTv('');
+      setTicketEci('');
+      setServicio('instalacion'); // Restablecer nuevo estado
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="servicio">
+          Servicio
+        </label>
+        <select
+          id="servicio"
+          value={servicio}
+          onChange={(e) => setServicio(e.target.value as 'instalacion' | 'reparacion')}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option value="instalacion">Instalación</option>
+          <option value="reparacion">Reparación</option>
+        </select>
+      </div>
       <div>
         <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
           Nombre
