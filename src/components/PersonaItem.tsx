@@ -60,14 +60,15 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
         <p className="text-sm font-medium text-gray-900">
           {persona.servicio.toUpperCase()}: {persona.nombre}
           <span className="ml-4 text-sm text-gray-600">
-            Fecha Fijada: {persona.fecha_fijada ? new Date(persona.fecha_fijada).toLocaleDateString() : 'Sin datos'}
+            (Fecha Fijada: {persona.fecha_fijada ? new Date(persona.fecha_fijada).toLocaleDateString() : <span className="text-red-600">Sin datos</span>})
           </span>
         </p>
+        <hr className="my-2" />
         <p className="text-sm text-gray-600">Dirección: {persona.direccion || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Teléfono: {persona.telefono || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Código Postal: {persona.codigo_postal || 'Sin datos'}</p>
         <p className="text-sm text-gray-600">Descripción: {persona.descripcion || 'Sin datos'}</p>
-        <p className="text-sm text-gray-600">Importe a Cobrar: {persona.importe_a_cobrar !== undefined ? `$${persona.importe_a_cobrar}` : 'Sin datos'}</p>
+        <p className="text-sm text-gray-600">Importe a Cobrar: {persona.importe_a_cobrar !== undefined && persona.importe_a_cobrar !== null ? `${persona.importe_a_cobrar}€` : 'Sin Cerrar'}</p>
         <p className="text-sm text-gray-600">Necesita Soporte TV: {persona.soporte_tv !== undefined ? (persona.soporte_tv ? 'Sí' : 'No') : 'Sin datos'}</p>
         <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
       </div>
