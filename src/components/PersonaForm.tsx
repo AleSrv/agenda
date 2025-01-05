@@ -20,7 +20,8 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
   const [modeloTv, setModeloTv] = useState('');
   const [ticketEci, setTicketEci] = useState('');
   const [servicio, setServicio] = useState<'instalacion' | 'reparacion'>('instalacion');
-  const [garantia, setGarantia] = useState<'SI' | 'NO' | 'SIN DETERMINAR'>('SIN DETERMINAR'); 
+  const [garantia, setGarantia] = useState<'SI' | 'NO' | 'SIN DETERMINAR'>('SIN DETERMINAR'); // Nuevo estado
+  const [terminado, setTerminado] = useState(false); // Nuevo estado
 
   useEffect(() => {
     if (initialData) {
@@ -36,6 +37,7 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setTicketEci(initialData.ticket_eci || '');
       setServicio(initialData.servicio || 'instalacion');
       setGarantia(initialData.garantia || 'SIN DETERMINAR'); // Inicializar nuevo estado
+      setTerminado(initialData.terminado || false); // Inicializar nuevo estado
     }
   }, [initialData]);
 
@@ -56,6 +58,7 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       ticket_eci: ticketEci || undefined,
       servicio,
       garantia, // Incluir nuevo campo
+      terminado, // Incluir nuevo campo
     };
 
     await onSubmit(personaData);
@@ -73,6 +76,7 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setTicketEci('');
       setServicio('instalacion');
       setGarantia('SIN DETERMINAR'); // Restablecer nuevo estado
+      setTerminado(false); // Restablecer nuevo estado
     }
   };
 
@@ -106,6 +110,18 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
           <option value="SI">SI</option>
           <option value="NO">NO</option>
         </select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="terminado">
+          Terminado
+        </label>
+        <input
+          type="checkbox"
+          id="terminado"
+          checked={terminado}
+          onChange={(e) => setTerminado(e.target.checked)}
+          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+        />
       </div>
       <div>
         <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">

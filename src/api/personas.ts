@@ -2,13 +2,23 @@ import { supabase } from '../lib/supabase';
 import type { Persona, PersonaInput } from '../types';
 
 export async function obtenerPersonas(): Promise<Persona[]> {
-  const { data, error } = await supabase
+  const { data: personasNoTerminadas, error: errorNoTerminadas } = await supabase
     .from('personas')
     .select('*')
+    .eq('terminado', false)
     .order('fecha_fijada', { ascending: true, nullsFirst: true });
 
-  if (error) throw error;
-  return data;
+  if (errorNoTerminadas) throw errorNoTerminadas;
+
+  const { data: personasTerminadas, error: errorTerminadas } = await supabase
+    .from('personas')
+    .select('*')
+    .eq('terminado', true)
+    .order('created_at', { ascending: true });
+
+  if (errorTerminadas) throw errorTerminadas;
+
+  return [...personasNoTerminadas, ...personasTerminadas];
 }
 
 export async function crearPersona(persona: PersonaInput): Promise<Persona> {
