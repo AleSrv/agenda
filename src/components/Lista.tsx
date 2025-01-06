@@ -3,7 +3,11 @@ import { Users, RefreshCw } from 'lucide-react';
 import { usePersonas } from '../hooks/usePersonas';
 import { PersonaItem } from './PersonaItem';
 
-export function Lista() {
+interface ListaProps {
+  user: { email: string } | null;
+}
+
+export function Lista( { user }: ListaProps ) {
   const {
     personas,
     cargando,
@@ -57,6 +61,7 @@ export function Lista() {
               onDelete={borrarPersona}
               onUpdate={modificarPersona}
               loading={cargando}
+              user={user}
             />
           ))}
         </ul>

@@ -8,9 +8,10 @@ interface PersonaItemProps {
   onDelete: (id: string) => Promise<void>;
   onUpdate: (id: string, data: PersonaInput) => Promise<void>;
   loading: boolean;
+  user: { email: string } | null;
 }
 
-export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaItemProps) {
+export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: PersonaItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [showlist, setShowlist] = useState(false);
 
@@ -40,7 +41,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
 
   if (isEditing) {
     return (
-      <li className="p-4 mb-4">
+      <li className="p-4 mb-4 w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium text-red-600">Editar Cliente</h3>
           <button
@@ -63,8 +64,8 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
 
   return (
     <li
-    onClick={handleshowlist}
-      className={`p-2 mb-1 flex flex-col rounded ${bgColorClass} cursor-pointer`}
+      onClick={handleshowlist}
+      className={`p-2 mb-1 flex flex-col rounded ${bgColorClass} cursor-pointer w-full max-w-md`}
     >
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-4">
@@ -86,20 +87,20 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading }: PersonaIte
           >
             <Pencil className="w-5 h-5" />
           </button>
-          <button
-            onClick={() => onDelete(persona.id)}
-            disabled={loading}
-            className="p-2 text-red-600 hover:text-red-900 rounded-full hover:bg-red-50"
-            title="Eliminar"
-          >
-            <Trash2 className="w-5 h-5" />
-          </button>
+          {user?.email !== "telemalaga@telemalaga.com" && (
+            <button
+              onClick={() => onDelete(persona.id)}
+              disabled={loading}
+              className="p-2 text-red-600 hover:text-red-900 rounded-full hover:bg-red-50"
+              title="Eliminar"
+            >
+              <Trash2 className="w-5 h-5" />
+            </button>
+           )}   
         </div>
       </div>
       <p className="text-sm text-gray-600">
-        {persona.terminado
-          ? <span className="text-green-600 font-bold">Terminada</span>
-          : <span className="text-red-600 font-bold ">Pendiente</span>}
+        {persona.terminado ? <span className="text-green-600">Terminada</span> : <span className="text-red-600">Pendiente</span>}
       </p>
       {persona.servicio === 'reparacion' && (
         <p className="text-sm text-gray-600">Garantía: {persona.garantia}</p>

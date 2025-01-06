@@ -12,7 +12,18 @@ export async function authenticate(username: string, password: string): Promise<
     return null;
   }
 
-  return data.user ? { user: data.user as AuthenticatedUser } : null;
+  const user = data.user as AuthenticatedUser;
+  const { data: userProfile } = await supabase
+    .from('admin_authentication') // Asegúrate de que esta es la tabla correcta
+    .select('role')
+    .eq('id', user.id)
+    .single();
+
+  if (userProfile) {
+    user.role = userProfile.role;
+  }
+
+  return { user };
 }
 
 export async function logout() {
