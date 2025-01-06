@@ -65,7 +65,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
   return (
     <li
       onClick={handleshowlist}
-      className={`p-2 mb-1 flex flex-col rounded ${bgColorClass} cursor-pointer w-full max-w-md`}
+      className={`p-2 mb-1 flex flex-col rounded ${bgColorClass} cursor-pointer w-full `}
     >
       <div className="flex justify-between items-center mb-2">
         <div className="flex items-center gap-4">
@@ -73,10 +73,16 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
             {persona.servicio.toUpperCase()}: {persona.nombre}
           </p>
           <span className="text-sm text-gray-600">
-            (Fecha Fijada: {persona.fecha_fijada
+            Fecha Fijada: {persona.fecha_fijada
               ? new Date(persona.fecha_fijada).toLocaleDateString()
-              : <span className="text-red-600">Sin datos</span>})
+              : <span className="text-red-600">Sin datos</span>}
           </span>
+          <hr className=' 
+          w-1/2 h-1 bg-gray-200 rounded-full' />
+          {persona.updated_at && (
+            <span className="text-sm text-gray-600">
+              Modificado: {new Date(persona.updated_at).toLocaleDateString()}
+            </span>)}
         </div>
         <div className="flex gap-2">
           <button
@@ -96,7 +102,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
             >
               <Trash2 className="w-5 h-5" />
             </button>
-           )}   
+          )}
         </div>
       </div>
       <p className="text-sm text-gray-600">
