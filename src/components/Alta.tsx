@@ -25,6 +25,8 @@ export function Alta() {
         <UserPlus className="w-6 h-6" />
         <p>Agregar Cliente </p><PanelTopOpen className="w-6 h-6" />
       </h2>
+      <div>
+      </div>
       {show && (
         <PersonaForm
           onSubmit={handleAgregarPersona}

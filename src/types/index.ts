@@ -10,7 +10,7 @@ export interface Persona {
   fecha_fijada?: string;
   terminado?: boolean;
   servicio: 'instalacion' | 'reparacion';
-  garantia: 'SI' | 'NO' | 'SIN DETERMINAR'; // Nuevo campo
+  garantia: 'SI' | 'NO' | 'SIN DETERMINAR'; 
   created_at: string;
   updated_at: string;
   modelo_tv?: string;
@@ -28,9 +28,14 @@ export interface PersonaInput {
   fecha_fijada?: string;
   terminado?: boolean;
   servicio: 'instalacion' | 'reparacion';
-  garantia: 'SI' | 'NO' | 'SIN DETERMINAR'; // Nuevo campo
+  garantia: 'SI' | 'NO' | 'SIN DETERMINAR'; 
   modelo_tv?: string;
   ticket_eci?: string;
+}
+
+export interface AuthenticatedUser {
+  id: string;
+  email: string;
 }
 
 export interface PersonasContextType {
