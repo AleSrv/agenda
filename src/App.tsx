@@ -6,6 +6,7 @@ import { Lista } from './components/Lista';
 import Login from './components/Login';
 import { authenticate } from './api/auth';
 import { AuthenticatedUser } from './types';
+import Card from './components/Card'; // Asegúrate de importar el componente Card
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -33,8 +34,10 @@ function App() {
     <PersonasProvider>
       <div className="min-h-screen bg-gray-100 py-8 px-4">
         <div className="max-w-4xl mx-auto space-y-8">
-          <p className="text-xl font-bold text-gray-800">Usuario: {user?.email === "telemalaga@telemalaga.com"? "Servicio Tecnico ": "No identificado"}</p>
-          <Alta />
+          <div className="flex flex-row "> 
+            <Card user={user} />
+            <Alta />
+          </div>
           <Lista />
         </div>
       </div>

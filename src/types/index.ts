@@ -36,6 +36,7 @@ export interface PersonaInput {
 export interface AuthenticatedUser {
   id: string;
   email: string;
+  imagedata: string;
 }
 
 export interface PersonasContextType {
