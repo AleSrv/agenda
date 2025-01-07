@@ -109,7 +109,10 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
         {persona.terminado ? <span className="text-green-600">Terminada</span> : <span className="text-red-600">Pendiente</span>}
       </p>
       {persona.servicio === 'reparacion' && (
-        <p className="text-sm text-gray-600">Garantía: {persona.garantia}</p>
+        <>
+          <p className="text-sm text-gray-600">Garantía: {persona.garantia}</p>
+          <h2 className="text-sm font-medium text-gray-900">Nº de Aviso: {persona.numero_aviso}</h2>
+        </>
       )}
       <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
       {showlist && (

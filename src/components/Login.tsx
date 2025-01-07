@@ -30,6 +30,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="mt-2 h-10 block w-full border-0 border-b-2 border-gray-300 focus:ring-0 focus:border-indigo-500 sm:text-sm rounded"
+              autoComplete="username" // Añadir atributo autocomplete
             />
           </div>
           <div>
@@ -43,6 +44,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="mt-2 h-10 block w-full border-0 border-b-2 border-gray-300 focus:ring-0 focus:border-indigo-500 sm:text-sm rounded"
+              autoComplete="current-password" // Añadir atributo autocomplete
             />
           </div>
           <button

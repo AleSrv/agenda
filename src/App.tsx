@@ -40,7 +40,7 @@ function App() {
       <div className="min-h-screen bg-gray-100 py-8 px-4">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="flex flex-col md:flex-row md:space-x-4">
-            <Card user={user} onLogout={handleLogout} />
+            <Card user={user} onLogout={handleLogout}   />
             <div className="flex flex-col space-y-8 mt-4 md:mt-0">
               <Alta />
               <Lista user={user} />

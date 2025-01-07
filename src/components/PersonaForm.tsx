@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { PersonaInput } from '../types';
+import type { PersonaInput } from '../types';
 
 interface PersonaFormProps {
   initialData?: PersonaInput;
@@ -20,8 +20,9 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
   const [modeloTv, setModeloTv] = useState('');
   const [ticketEci, setTicketEci] = useState('');
   const [servicio, setServicio] = useState<'instalacion' | 'reparacion'>('instalacion');
-  const [garantia, setGarantia] = useState<'SI' | 'NO' | 'SIN DETERMINAR'>('SIN DETERMINAR'); // Nuevo estado
-  const [terminado, setTerminado] = useState(false); // Nuevo estado
+  const [garantia, setGarantia] = useState<'SI' | 'NO' | 'SIN DETERMINAR'>('SIN DETERMINAR');
+  const [terminado, setTerminado] = useState(false);
+  const [numeroAviso, setNumeroAviso] = useState(''); // Nuevo estado
 
   useEffect(() => {
     if (initialData) {
@@ -36,8 +37,9 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setModeloTv(initialData.modelo_tv || '');
       setTicketEci(initialData.ticket_eci || '');
       setServicio(initialData.servicio || 'instalacion');
-      setGarantia(initialData.garantia || 'SIN DETERMINAR'); // Inicializar nuevo estado
-      setTerminado(initialData.terminado || false); // Inicializar nuevo estado
+      setGarantia(initialData.garantia || 'SIN DETERMINAR');
+      setTerminado(initialData.terminado || false);
+      setNumeroAviso(initialData.numero_aviso || ''); // Inicializar nuevo estado
     }
   }, [initialData]);
 
@@ -57,12 +59,13 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       modelo_tv: modeloTv || undefined,
       ticket_eci: ticketEci || undefined,
       servicio,
-      garantia, // Incluir nuevo campo
-      terminado, // Incluir nuevo campo
+      garantia,
+      terminado,
+      numero_aviso: servicio === 'reparacion' ? numeroAviso.trim() || undefined : undefined, // Incluir nuevo campo solo si es reparacion
     };
 
     await onSubmit(personaData);
-    
+
     if (!initialData) {
       setNombre('');
       setDireccion('');
@@ -75,124 +78,31 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setModeloTv('');
       setTicketEci('');
       setServicio('instalacion');
-      setGarantia('SIN DETERMINAR'); // Restablecer nuevo estado
-      setTerminado(false); // Restablecer nuevo estado
+      setGarantia('SIN DETERMINAR');
+      setTerminado(false);
+      setNumeroAviso(''); // Restablecer nuevo estado
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="servicio">
+        <label htmlFor="servicio" className="block text-sm font-medium text-gray-700">
           Servicio
         </label>
         <select
           id="servicio"
           value={servicio}
           onChange={(e) => setServicio(e.target.value as 'instalacion' | 'reparacion')}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          disabled={loading}
         >
           <option value="instalacion">Instalación</option>
           <option value="reparacion">Reparación</option>
         </select>
       </div>
+
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="garantia">
-          Garantía
-        </label>
-        <select
-          id="garantia"
-          value={garantia}
-          onChange={(e) => setGarantia(e.target.value as 'SI' | 'NO' | 'SIN DETERMINAR')}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        >
-          <option value="SIN DETERMINAR">SIN DETERMINAR</option>
-          <option value="SI">SI</option>
-          <option value="NO">NO</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="terminado">
-          Terminado
-        </label>
-        <input
-          type="checkbox"
-          id="terminado"
-          checked={terminado}
-          onChange={(e) => setTerminado(e.target.checked)}
-          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-        />
-      </div>
-      <div>
-        <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
-          Nombre
-        </label>
-        <input
-          type="text"
-          id="nombre"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el nombre"
-          disabled={loading}
-        />
-      </div>
-      <div>
-        <label htmlFor="direccion" className="block text-sm font-medium text-gray-700">
-          Dirección
-        </label>
-        <input
-          type="text"
-          id="direccion"
-          value={direccion}
-          onChange={(e) => setDireccion(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese la dirección (opcional)"
-          disabled={loading}
-        />
-      </div>
-      <div>
-        <label htmlFor="telefono" className="block text-sm font-medium text-gray-700">
-          Teléfono
-        </label>
-        <input
-          type="tel"
-          id="telefono"
-          value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el teléfono (opcional)"
-          disabled={loading}
-        />
-      </div>
-      <div>
-        <label htmlFor="codigo_postal" className="block text-sm font-medium text-gray-700">
-          Código Postal
-        </label>
-        <input
-          type="text"
-          id="codigo_postal"
-          value={codigoPostal}
-          onChange={(e) => setCodigoPostal(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el código postal (opcional)"
-          disabled={loading}
-        />
-      </div>
-      <div>
-        <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">
-          Descripción
-        </label>
-        <textarea
-          id="descripcion"
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese una descripción (opcional)"
-          disabled={loading}
-        />
-      </div>
-      <div>
         <label htmlFor="importe_a_cobrar" className="block text-sm font-medium text-gray-700">
           Importe a Cobrar
         </label>
@@ -206,20 +116,8 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
           disabled={loading}
         />
       </div>
-      <div className="flex items-center">
-        <input
-          type="checkbox"
-          id="soporte_tv"
-          checked={soporteTv}
-          onChange={(e) => setSoporteTv(e.target.checked)}
-          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-          disabled={loading}
-        />
-        <label htmlFor="soporte_tv" className="ml-2 block text-sm font-medium text-gray-700">
-          Necesita Soporte TV?
-        </label>
-      </div>
-      <div>
+
+      <div className="mb-4">
         <label htmlFor="fecha_fijada" className="block text-sm font-medium text-gray-700">
           Fecha Fijada
         </label>
@@ -233,9 +131,119 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
           disabled={loading}
         />
       </div>
-      <div>
+
+      {servicio === 'reparacion' && (
+        <>
+          <div className="mb-4">
+            <label htmlFor="numero_aviso" className="block text-sm font-medium text-gray-700">
+              Nº de Aviso
+            </label>
+            <input
+              type="text"
+              id="numero_aviso"
+              value={numeroAviso}
+              onChange={(e) => setNumeroAviso(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Ingrese el Nº de Aviso"
+              disabled={loading}
+              autoComplete="off"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="garantia" className="block text-sm font-medium text-gray-700">
+              Garantía
+            </label>
+            <select
+              id="garantia"
+              value={garantia}
+              onChange={(e) => setGarantia(e.target.value as 'SI' | 'NO' | 'SIN DETERMINAR')}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              disabled={loading}
+            >
+              <option value="SI">Sí</option>
+              <option value="NO">No</option>
+              <option value="SIN DETERMINAR">Sin Determinar</option>
+            </select>
+          </div>
+        </>
+      )}
+      <div className="mb-4 flex items-center">
+        <input
+          type="checkbox"
+          id="terminado"
+          checked={terminado}
+          onChange={(e) => setTerminado(e.target.checked)}
+          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          disabled={loading}
+        />
+        <label htmlFor="terminado" className="ml-2 block text-sm font-medium text-gray-700">
+          Terminado
+        </label>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
+          Nombre
+        </label>
+        <input
+          type="text"
+          id="nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese el nombre"
+          disabled={loading}
+          autoComplete="name"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="direccion" className="block text-sm font-medium text-gray-700">
+          Dirección
+        </label>
+        <input
+          type="text"
+          id="direccion"
+          value={direccion}
+          onChange={(e) => setDireccion(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese la dirección"
+          disabled={loading}
+          autoComplete="street-address"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="telefono" className="block text-sm font-medium text-gray-700">
+          Teléfono
+        </label>
+        <input
+          type="tel"
+          id="telefono"
+          value={telefono}
+          onChange={(e) => setTelefono(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese el teléfono"
+          disabled={loading}
+          autoComplete="tel"
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="codigo_postal" className="block text-sm font-medium text-gray-700">
+          Código Postal
+        </label>
+        <input
+          type="text"
+          id="codigo_postal"
+          value={codigoPostal}
+          onChange={(e) => setCodigoPostal(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese el código postal"
+          disabled={loading}
+          autoComplete="postal-code"
+        />
+      </div>
+      <div className="mb-4">
         <label htmlFor="modelo_tv" className="block text-sm font-medium text-gray-700">
-          Modelo TV
+          Modelo TV / Soundbar
         </label>
         <input
           type="text"
@@ -247,7 +255,7 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
           disabled={loading}
         />
       </div>
-      <div>
+      <div className="mb-4">
         <label htmlFor="ticket_eci" className="block text-sm font-medium text-gray-700">
           Ticket ECI
         </label>
@@ -261,13 +269,44 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
           disabled={loading}
         />
       </div>
-      <button
-        type="submit"
-        disabled={loading || !nombre.trim()}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-      >
-        {loading ? 'Procesando...' : submitText}
-      </button>
+      <div className="mb-4">
+        <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">
+          Descripción
+        </label>
+        <textarea
+          id="descripcion"
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese la descripción"
+          disabled={loading}
+          autoComplete="off"
+        />
+      </div>
+
+      <div className="mb-4 flex items-center">
+        <input
+          type="checkbox"
+          id="soporte_tv"
+          checked={soporteTv}
+          onChange={(e) => setSoporteTv(e.target.checked)}
+          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          disabled={loading}
+        />
+        <label htmlFor="soporte_tv" className="ml-2 block text-sm font-medium text-gray-700">
+          Necesita Soporte TV
+        </label>
+      </div>
+
+      <div className="mt-6">
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          disabled={loading}
+        >
+          {submitText}
+        </button>
+      </div>
     </form>
   );
 }
