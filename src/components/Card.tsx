@@ -1,6 +1,8 @@
 import React from 'react';
 import { AuthenticatedUser } from '../types';
 import { logout } from '../api/auth';
+import { LogOut } from 'lucide-react';
+
 
 interface CardProps {
   user: AuthenticatedUser | null;
@@ -18,15 +20,25 @@ const Card: React.FC<CardProps> = ({ user, onLogout }) => {
   };
 
   return (
-    <div className="w-36 h-36 p-1 bg-white rounded-lg shadow-md flex flex-col justify-center items-center">
-      <p className='rounded bg-slate-700 text-white p-1 m-1'>{user?.email === "telemalaga@telemalaga.com" ? "Servicio Tecnico " : "Promotor"}
+    <div className="w-36 h-36 p-1 bg-white
+     rounded-lg shadow-md flex flex-col justify-center items-center p-2">
+      <p className='rounded bg-inherit text-blue-900  m-2'>{user?.email === "telemalaga@telemalaga.com" ? "Servicio Tecnico " : "Promotor"}
       </p>
       <img
         src={user?.email === "telemalaga@telemalaga.com" ? URL_servicio : URL_promotor}
         alt="NO IMAGE"
-        className="w-16 h-16 rounded object-cover object-center"
+        className="w-14 h-12 rounded object-cover object-center bg-inherit p-2 mt-2"
       />
-      <button onClick={handleLogout} className='bg-green-200 p-1 cursor-pointer m-1 rounded'>Logout</button>
+      <button
+        onClick={handleLogout}
+        className='bg-green-200 shadow-sm cursor-pointer rounded 
+      hover:bg-green-400 m-2 w-24 h-8 flex justify-center items-center'
+      >
+        Salir
+        <LogOut
+          className='w-4 h-4 ml-1'
+        />
+      </button>
     </div>
   );
 };
