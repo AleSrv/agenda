@@ -77,8 +77,6 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
               ? new Date(persona.fecha_fijada).toLocaleDateString()
               : <span className="text-red-600">Sin datos</span>}
           </span>
-          <hr className=' 
-          w-1/2 h-1 bg-gray-200 rounded-full' />
           {persona.updated_at && (
             <span className="text-sm text-gray-600">
               Modificado: {new Date(persona.updated_at).toLocaleDateString()}
