@@ -15,7 +15,7 @@ export interface Persona {
   updated_at: string;
   modelo_tv?: string;
   ticket_eci?: string;
-  numero_aviso?: string; // Nuevo campo
+  numero_aviso?: string; 
 }
 
 export interface PersonaInput {
@@ -32,7 +32,7 @@ export interface PersonaInput {
   garantia: 'SI' | 'NO' | 'SIN DETERMINAR';
   modelo_tv?: string;
   ticket_eci?: string;
-  numero_aviso?: string; // Nuevo campo
+  numero_aviso?: string; 
 }
 
 export interface AuthenticatedUser {

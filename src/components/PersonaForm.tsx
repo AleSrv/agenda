@@ -132,41 +132,39 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
         />
       </div>
 
-      {servicio === 'reparacion' && (
-        <>
-          <div className="mb-4">
-            <label htmlFor="numero_aviso" className="block text-sm font-medium text-gray-700">
-              Nº de Aviso
-            </label>
-            <input
-              type="text"
-              id="numero_aviso"
-              value={numeroAviso}
-              onChange={(e) => setNumeroAviso(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              placeholder="Ingrese el Nº de Aviso"
-              disabled={loading}
-              autoComplete="off"
-            />
-          </div>
 
-          <div className="mb-4">
-            <label htmlFor="garantia" className="block text-sm font-medium text-gray-700">
-              Garantía
-            </label>
-            <select
-              id="garantia"
-              value={garantia}
-              onChange={(e) => setGarantia(e.target.value as 'SI' | 'NO' | 'SIN DETERMINAR')}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              disabled={loading}
-            >
-              <option value="SI">Sí</option>
-              <option value="NO">No</option>
-              <option value="SIN DETERMINAR">Sin Determinar</option>
-            </select>
-          </div>
-        </>
+      <div className="mb-4">
+        <label htmlFor="numero_aviso" className="block text-sm font-medium text-gray-700">
+          Nº de Aviso
+        </label>
+        <input
+          type="text"
+          id="numero_aviso"
+          value={numeroAviso}
+          onChange={(e) => setNumeroAviso(e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          placeholder="Ingrese el Nº de Aviso"
+          disabled={loading}
+          autoComplete="off"
+        />
+      </div>
+      {servicio === 'reparacion' && (
+        <div className="mb-4">
+          <label htmlFor="garantia" className="block text-sm font-medium text-gray-700">
+            Garantía
+          </label>
+          <select
+            id="garantia"
+            value={garantia}
+            onChange={(e) => setGarantia(e.target.value as 'SI' | 'NO' | 'SIN DETERMINAR')}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            disabled={loading}
+          >
+            <option value="SI">Sí</option>
+            <option value="NO">No</option>
+            <option value="SIN DETERMINAR">Sin Determinar</option>
+          </select>
+        </div>
       )}
       <div className="mb-4 flex items-center">
         <input

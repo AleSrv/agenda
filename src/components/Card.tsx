@@ -20,14 +20,13 @@ const Card: React.FC<CardProps> = ({ user, onLogout }) => {
   };
 
   return (
-    <div className="w-36 h-36 p-1 bg-white
-     rounded-lg shadow-md flex flex-col justify-center items-center p-2">
+    <div className="w-36 h-36 bg-white rounded-lg shadow-md flex flex-col justify-center items-center ">
       <p className='rounded bg-inherit text-blue-900  m-2'>{user?.email === "telemalaga@telemalaga.com" ? "Servicio Tecnico " : "Promotor"}
       </p>
       <img
         src={user?.email === "telemalaga@telemalaga.com" ? URL_servicio : URL_promotor}
         alt="NO IMAGE"
-        className="w-14 h-12 rounded object-cover object-center bg-inherit p-2 mt-2"
+        className="w-16 h-16 rounded  object-center bg-inherit p-2 mt-2"
       />
       <button
         onClick={handleLogout}
