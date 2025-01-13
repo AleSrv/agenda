@@ -6,7 +6,9 @@ import { Lista } from './components/Lista';
 import Login from './components/Login';
 import { authenticate } from './api/auth';
 import { AuthenticatedUser } from './types';
-import Card from './components/Card'; // Asegúrate de importar el componente Card
+// import Card from './components/Card'; // Asegúrate de importar el componente Card
+import Card from './components/Card';
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,18 +39,16 @@ function App() {
 
   return (
     <PersonasProvider>
-      <div className="min-h-screen bg-gray-100 py-8 px-4">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="flex flex-col md:flex-row md:space-x-4">
-            <Card user={user} onLogout={handleLogout}   />
-            <div className="flex flex-col space-y-8 mt-4 md:mt-0">
-              <Alta />
-              <Lista user={user} />
-            </div>
+      <Toaster position="top-right" />
+      <div className="min-h-screen bg-gray-100 py-4">
+        <div className="flex flex-col w-full items-center content-between gap-4">
+          <div className="flex flex-row justify-start  gap-4">
+            <Card onLogout={handleLogout} />
+            <Alta />
           </div>
+          <Lista user={user} />
         </div>
       </div>
-      <Toaster position="top-right" />
     </PersonasProvider>
   );
 }

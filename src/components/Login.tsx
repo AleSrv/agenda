@@ -15,7 +15,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100  g-recaptcha" data-sitekey="your_site_key">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
