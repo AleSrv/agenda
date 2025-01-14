@@ -14,7 +14,7 @@ export function Alta() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="w-full  mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2
         className="text-2xl font-bold mb-6 flex items-center gap-2
          bg-slate-600 p-2 rounded-lg text-white cursor-pointer
