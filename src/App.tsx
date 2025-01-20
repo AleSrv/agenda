@@ -46,6 +46,8 @@ function App() {
             <Card onLogout={handleLogout} />
             <Alta />
           </div>
+          <div className="flex flex-row justify-start w-full max-w-2xl mx-auto  gap-4">
+          </div>
           <Lista user={user} />
         </div>
       </div>
