@@ -20,6 +20,13 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
     setIsEditing(false);
   };
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm('Está por eliminar un Servicio. ¿Está seguro?');
+    if (confirmed) {
+      await onDelete(persona.id);
+    }
+  };
+
   const handleshowlist = () => {
     setShowlist(!showlist);
   };
@@ -93,7 +100,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
           </button>
           {user?.email !== "telemalaga@telemalaga.com" && (
             <button
-              onClick={() => onDelete(persona.id)}
+              onClick={handleDelete}
               disabled={loading}
               className="p-2 text-red-600 hover:text-red-900 rounded-full hover:bg-red-50"
               title="Eliminar"
