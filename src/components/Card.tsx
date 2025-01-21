@@ -12,7 +12,7 @@ const Card: React.FC<CardProps> = ({ onLogout }) => {
       onLogout();
     } catch (error) {
       console.error(error);
-    }
+    } 
   }
 
   return (
@@ -22,7 +22,6 @@ const Card: React.FC<CardProps> = ({ onLogout }) => {
       onClick={handleLogout}
     >
       <Power className="w-5 h-5 text-red-600" />
-      <strong>Logout</strong>
     </div>
   );
 };
