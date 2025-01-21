@@ -78,9 +78,9 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
       onClick={handleshowlist}
       className={`p-2 mb-1 flex flex-col rounded ${bgColorClass} cursor-pointer w-full `}
     >
-      <div id='columnas' className="grid grid-cols-4 gap-8 mb-2">
-        
-        <div id='nombre' className="flex flex-col gap-1 shadow-md p-2">
+      <div id='columnas' className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-2">
+
+        <div id='nombre' className="flex flex-col gap-1 sm:shadow-md p-2">
           <p className="text-sm font-medium text-gray-900">
             {persona.servicio.toUpperCase()}
           </p>
@@ -100,7 +100,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
           </div>
         </div>
 
-        <div id='fechas' className='flex flex-col gap-1 shadow-md p-2'>
+        <div id='fechas' className='flex flex-col gap-1 p-2 sm:shadow-md'>
           <span className="text-sm text-gray-600 font-bold">
             Fecha Fijada: {persona.fecha_fijada
               ? <div>
@@ -115,7 +115,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
           )}
         </div>
 
-        <div id='estado' className="flex flex-col gap-1 shadow-md p-2">
+        <div id='estado' className="flex flex-col gap-1 md:shadow-md p-2">
           <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
           <div>
             {persona.updated_at && (
@@ -125,7 +125,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
           </div>
         </div>
 
-        <div id='botones' className="flex gap-2 shadow-md p-2">
+        <div id='botones' className="flex flex-col items-center justify-center gap-2 p-2 md:shadow-md">
           <button
             onClick={() => setIsEditing(true)}
             disabled={loading}
