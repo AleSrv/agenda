@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pencil, Trash2, X } from 'lucide-react';
+import { Pencil, Trash2, X, Speech } from 'lucide-react';
 import type { Persona, PersonaInput } from '../types';
 import { PersonaForm } from './PersonaForm';
 
@@ -16,8 +16,12 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
   const [showlist, setShowlist] = useState(false);
 
   const handleUpdate = async (data: PersonaInput) => {
-    await onUpdate(persona.id, data);
-    setIsEditing(false);
+    try {
+      await onUpdate(persona.id, data);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error al actualizar persona:', error);
+    }
   };
 
   const handleDelete = async () => {
@@ -74,22 +78,54 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
       onClick={handleshowlist}
       className={`p-2 mb-1 flex flex-col rounded ${bgColorClass} cursor-pointer w-full `}
     >
-      <div className="flex justify-between items-center mb-2">
-        <div className="flex items-center gap-4">
+      <div id='columnas' className="grid grid-cols-4 gap-8 mb-2">
+        
+        <div id='nombre' className="flex flex-col gap-1 shadow-md p-2">
           <p className="text-sm font-medium text-gray-900">
-            {persona.servicio.toUpperCase()}: {persona.nombre}
+            {persona.servicio.toUpperCase()}
           </p>
-          <span className="text-sm text-gray-600">
-            Fecha Fijada: {persona.fecha_fijada
-              ? new Date(persona.fecha_fijada).toLocaleDateString()
-              : <span className="text-red-600">Sin datos</span>}
-          </span>
-          {persona.updated_at && (
-            <span className="text-sm text-gray-600">
-              Modificado: {new Date(persona.updated_at).toLocaleDateString()}
-            </span>)}
+          <p className="text-sm font-medium text-gray-900">
+            {persona.nombre}
+          </p>
+          <p className="text-sm text-gray-600">
+            {persona.terminado ? <span className="text-green-600">Terminada</span> : <span className="text-red-600">Pendiente</span>}
+          </p>
+          <div>
+            {persona.servicio === 'reparacion' && (
+              <div>
+                <p className="text-sm text-gray-600">Garantía: {persona.garantia}</p>
+                <p className="text-sm font-medium text-gray-900">Nº de Aviso: {persona.numero_aviso}</p>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex gap-2">
+
+        <div id='fechas' className='flex flex-col gap-1 shadow-md p-2'>
+          <span className="text-sm text-gray-600 font-bold">
+            Fecha Fijada: {persona.fecha_fijada
+              ? <div>
+                {new Date(persona.fecha_fijada).toLocaleDateString()}
+              </div>
+              : <p className="text-red-600">Sin datos</p>}
+          </span>
+          {!persona.terminado && persona.fecha_fijada && (
+            <div className="w-8 h-8 flex items-center justify-center bg-slate-700 rounded-full">
+              <Speech className="w-5 h-5 text-yellow-300 animate-pulse" />
+            </div>
+          )}
+        </div>
+
+        <div id='estado' className="flex flex-col gap-1 shadow-md p-2">
+          <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
+          <div>
+            {persona.updated_at && (
+              <span className="text-sm text-gray-600">
+                (Modificado: {new Date(persona.updated_at).toLocaleDateString()})
+              </span>)}
+          </div>
+        </div>
+
+        <div id='botones' className="flex gap-2 shadow-md p-2">
           <button
             onClick={() => setIsEditing(true)}
             disabled={loading}
@@ -110,16 +146,6 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
           )}
         </div>
       </div>
-      <p className="text-sm text-gray-600">
-        {persona.terminado ? <span className="text-green-600">Terminada</span> : <span className="text-red-600">Pendiente</span>}
-      </p>
-      {persona.servicio === 'reparacion' && (
-        <>
-          <p className="text-sm text-gray-600">Garantía: {persona.garantia}</p>
-          <h2 className="text-sm font-medium text-gray-900">Nº de Aviso: {persona.numero_aviso}</h2>
-        </>
-      )}
-      <p className="text-sm text-gray-500">Agregado: {new Date(persona.created_at).toLocaleDateString()}</p>
       {showlist && (
         <>
           <hr className="my-2 bg-inherit" />
