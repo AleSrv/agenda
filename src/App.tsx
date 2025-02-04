@@ -6,14 +6,16 @@ import { Lista } from './components/Lista';
 import Login from './components/Login';
 import { authenticate } from './api/auth';
 import { AuthenticatedUser } from './types';
-// import Card from './components/Card'; // Asegúrate de importar el componente Card
 import Card from './components/Card';
-
+import Filtro from './components/Filtro';
+import Switches from './components/Switches';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [, setLoading] = useState(false);
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
+  const [filterQuery, setFilterQuery] = useState('');
+  const [filters, setFilters] = useState({ verPendientes: true, verInstalaciones: false, verReparaciones: false });
 
   const handleLogin = async (username: string, password: string) => {
     setLoading(true);
@@ -46,9 +48,9 @@ function App() {
             <Card onLogout={handleLogout} />
             <Alta />
           </div>
-          <div className="flex flex-row justify-start w-full max-w-2xl mx-auto  gap-4">
-          </div>
-          <Lista user={user} />
+          <Filtro onFilter={setFilterQuery} />
+          <Switches onSwitchChange={setFilters} />
+          <Lista user={user} filterQuery={filterQuery} filters={filters} />
         </div>
       </div>
     </PersonasProvider>

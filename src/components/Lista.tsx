@@ -5,9 +5,11 @@ import { PersonaItem } from './PersonaItem';
 
 interface ListaProps {
   user: { email: string } | null;
+  filterQuery: string;
+  filters: { verPendientes: boolean; verInstalaciones: boolean; verReparaciones: boolean };
 }
 
-export function Lista({ user }: ListaProps) {
+export function Lista({ user, filterQuery, filters }: ListaProps) {
   const {
     personas,
     cargando,
@@ -30,11 +32,24 @@ export function Lista({ user }: ListaProps) {
   }
 
   const filteredPersonas = personas.filter(persona => {
-    if (!persona.fecha_terminado) return true;
-    const fechaTerminado = new Date(persona.fecha_terminado);
-    const hoy = new Date();
-    const diferenciaDias = (hoy.getTime() - fechaTerminado.getTime()) / (1000 * 3600 * 24);
-    return diferenciaDias <= 30;
+    const query = filterQuery.toLowerCase();
+    const matchesQuery = (
+      persona.nombre.toLowerCase().includes(query) ||
+      persona.telefono?.toLowerCase().includes(query) ||
+      persona.ticket_eci?.toLowerCase().includes(query) ||
+      persona.modelo_tv?.toLowerCase().includes(query) ||
+      persona.numero_aviso?.toLowerCase().includes(query)
+    );
+
+    const matchesPendientes = filters.verPendientes ? !persona.terminado : true;
+    const matchesInstalaciones = filters.verInstalaciones ? persona.servicio === 'instalacion' : false;
+    const matchesReparaciones = filters.verReparaciones ? persona.servicio === 'reparacion' : false;
+
+    const matchesFilters = filters.verPendientes
+      ? matchesPendientes && (matchesInstalaciones || matchesReparaciones)
+      : matchesInstalaciones || matchesReparaciones;
+
+    return matchesQuery && matchesFilters;
   });
 
   return (
