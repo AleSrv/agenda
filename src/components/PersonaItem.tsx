@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pencil, Trash2, X, Speech } from 'lucide-react';
+import { Pencil, Trash2, X, Speech, CheckCircle } from 'lucide-react';
 import type { Persona, PersonaInput } from '../types';
 import { PersonaForm } from './PersonaForm';
 
@@ -28,6 +28,13 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
     const confirmed = window.confirm('Está por eliminar un Servicio. ¿Está seguro?');
     if (confirmed) {
       await onDelete(persona.id);
+    }
+  };
+
+  const handleTerminar = async () => {
+    const confirmed = window.confirm('Cerrar caso?');
+    if (confirmed) {
+      await handleUpdate({ ...persona, terminado: true });
     }
   };
 
@@ -133,6 +140,14 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
             title="Editar"
           >
             <Pencil className="w-5 h-5" />
+          </button>
+          <button
+            onClick={handleTerminar}
+            disabled={loading}
+            className="p-2 text-green-600 hover:text-green-900 rounded-full hover:bg-green-50"
+            title="Terminar"
+          >
+            <CheckCircle className="w-5 h-5" />
           </button>
           {user?.email !== "telemalaga@telemalaga.com" && (
             <button

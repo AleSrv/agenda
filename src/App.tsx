@@ -42,7 +42,7 @@ function App() {
       <Toaster position="top-right" />
       <div className="min-h-screen bg-gray-100 py-4">
         <div className="flex flex-col w-full items-center content-between gap-4">
-          <div className="flex flex-row justify-start w-full max-w-2xl  gap-4">
+          <div className="flex flex-row  w-full max-w-2xl  gap-4 ">
             <Card onLogout={handleLogout} />
             <Alta />
           </div>
