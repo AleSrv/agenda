@@ -7,7 +7,7 @@ interface ListaProps {
   user: { email: string } | null;
 }
 
-export function Lista( { user }: ListaProps ) {
+export function Lista({ user }: ListaProps) {
   const {
     personas,
     cargando,
@@ -29,6 +29,14 @@ export function Lista( { user }: ListaProps ) {
     );
   }
 
+  const filteredPersonas = personas.filter(persona => {
+    if (!persona.fecha_terminado) return true;
+    const fechaTerminado = new Date(persona.fecha_terminado);
+    const hoy = new Date();
+    const diferenciaDias = (hoy.getTime() - fechaTerminado.getTime()) / (1000 * 3600 * 24);
+    return diferenciaDias <= 30;
+  });
+
   return (
     <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-6">
@@ -48,13 +56,13 @@ export function Lista( { user }: ListaProps ) {
 
       {cargando && personas.length === 0 ? (
         <div className="text-center p-4">Cargando...</div>
-      ) : personas.length === 0 ? (
+      ) : filteredPersonas.length === 0 ? (
         <div className="text-center text-gray-500 p-4">
           No hay personas registradas
         </div>
       ) : (
         <ul className="divide-y divide-gray-200">
-          {personas.map((persona) => (
+          {filteredPersonas.map((persona) => (
             <PersonaItem
               key={persona.id}
               persona={persona}

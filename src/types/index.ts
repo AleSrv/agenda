@@ -9,6 +9,7 @@ export interface Persona {
   soporte_tv?: boolean;
   fecha_fijada?: string;
   terminado?: boolean;
+  fecha_terminado?: string; // Nuevo campo
   servicio: 'instalacion' | 'reparacion';
   garantia: 'SI' | 'NO' | 'SIN DETERMINAR';
   created_at: string;
@@ -28,6 +29,7 @@ export interface PersonaInput {
   soporte_tv?: boolean;
   fecha_fijada?: string;
   terminado?: boolean;
+  fecha_terminado?: string; // Nuevo campo
   servicio: 'instalacion' | 'reparacion';
   garantia: 'SI' | 'NO' | 'SIN DETERMINAR';
   modelo_tv?: string;

@@ -34,10 +34,10 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
   const handleTerminar = async () => {
     const confirmed = window.confirm('Cerrar caso?');
     if (confirmed) {
-      await handleUpdate({ ...persona, terminado: true });
+      const fechaTerminado = new Date().toISOString();
+      await handleUpdate({ ...persona, terminado: true, fecha_terminado: fechaTerminado });
     }
   };
-
   const handleshowlist = () => {
     setShowlist(!showlist);
   };

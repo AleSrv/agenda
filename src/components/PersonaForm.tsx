@@ -46,7 +46,7 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!nombre.trim()) return;
-
+  
     const personaData: PersonaInput = {
       nombre: nombre.trim(),
       direccion: direccion.trim() || undefined,
@@ -61,11 +61,12 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       servicio,
       garantia,
       terminado,
-      numero_aviso: servicio === 'reparacion' ? numeroAviso.trim() || undefined : undefined, // Incluir nuevo campo solo si es reparacion
+      fecha_terminado: terminado ? new Date().toISOString() : undefined, // Nuevo campo
+      numero_aviso: servicio === 'reparacion' ? numeroAviso.trim() || undefined : undefined,
     };
-
+  
     await onSubmit(personaData);
-
+  
     if (!initialData) {
       setNombre('');
       setDireccion('');
@@ -80,7 +81,7 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setServicio('instalacion');
       setGarantia('SIN DETERMINAR');
       setTerminado(false);
-      setNumeroAviso(''); // Restablecer nuevo estado
+      setNumeroAviso('');
     }
   };
 
