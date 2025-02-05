@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({ onLogout }) => {
 
   return (
     <div
-      className=" p-4 bg-white rounded-lg shadow-md  cursor-pointer  hover:bg-red-100 hover:text-red-900 m-auto"
+      className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md cursor-pointer hover:bg-red-100 dark:hover:bg-red-900 hover:text-red-900 dark:hover:text-red-100 m-auto"
       title="Cerrar sesión"
       onClick={handleLogout}
     >

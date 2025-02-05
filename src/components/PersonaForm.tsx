@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { PersonaInput } from '../types';
+import { PersonaInput } from '../types';
 
 interface PersonaFormProps {
   initialData?: PersonaInput;
@@ -22,7 +22,7 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
   const [servicio, setServicio] = useState<'instalacion' | 'reparacion'>('instalacion');
   const [garantia, setGarantia] = useState<'SI' | 'NO' | 'SIN DETERMINAR'>('SIN DETERMINAR');
   const [terminado, setTerminado] = useState(false);
-  const [numeroAviso, setNumeroAviso] = useState(''); // Nuevo estado
+  const [numeroAviso, setNumeroAviso] = useState('');
 
   useEffect(() => {
     if (initialData) {
@@ -36,152 +36,44 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
       setFechaFijada(initialData.fecha_fijada || '');
       setModeloTv(initialData.modelo_tv || '');
       setTicketEci(initialData.ticket_eci || '');
-      setServicio(initialData.servicio || 'instalacion');
-      setGarantia(initialData.garantia || 'SIN DETERMINAR');
+      setServicio(initialData.servicio);
+      setGarantia(initialData.garantia);
       setTerminado(initialData.terminado || false);
-      setNumeroAviso(initialData.numero_aviso || ''); // Inicializar nuevo estado
+      setNumeroAviso(initialData.numero_aviso || '');
     }
   }, [initialData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nombre.trim()) return;
-  
-    const personaData: PersonaInput = {
-      nombre: nombre.trim(),
-      direccion: direccion.trim() || undefined,
-      telefono: telefono.trim() || undefined,
-      codigo_postal: codigoPostal.trim() || undefined,
-      descripcion: descripcion.trim() || undefined,
+    if (!nombre.trim()) {
+      alert('El nombre es obligatorio');
+      return;
+    }
+
+    const persona: PersonaInput = {
+      nombre,
+      direccion,
+      telefono,
+      codigo_postal: codigoPostal,
+      descripcion,
       importe_a_cobrar: importeACobrar,
       soporte_tv: soporteTv,
-      fecha_fijada: fechaFijada || undefined,
-      modelo_tv: modeloTv || undefined,
-      ticket_eci: ticketEci || undefined,
+      fecha_fijada: fechaFijada,
+      modelo_tv: modeloTv,
+      ticket_eci: ticketEci,
       servicio,
       garantia,
       terminado,
-      fecha_terminado: terminado ? new Date().toISOString() : undefined, // Nuevo campo
-      numero_aviso: servicio === 'reparacion' ? numeroAviso.trim() || undefined : undefined,
+      numero_aviso: numeroAviso,
     };
-  
-    await onSubmit(personaData);
-  
-    if (!initialData) {
-      setNombre('');
-      setDireccion('');
-      setTelefono('');
-      setCodigoPostal('');
-      setDescripcion('');
-      setImporteACobrar(undefined);
-      setSoporteTv(false);
-      setFechaFijada('');
-      setModeloTv('');
-      setTicketEci('');
-      setServicio('instalacion');
-      setGarantia('SIN DETERMINAR');
-      setTerminado(false);
-      setNumeroAviso('');
-    }
+
+    await onSubmit(persona);
   };
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-4 w-full'>
+    <form onSubmit={handleSubmit} className="space-y-4 w-full">
       <div className="mb-4">
-        <label htmlFor="servicio" className="block text-sm font-medium text-gray-700">
-          Servicio
-        </label>
-        <select
-          id="servicio"
-          value={servicio}
-          onChange={(e) => setServicio(e.target.value as 'instalacion' | 'reparacion')}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          disabled={loading}
-        >
-          <option value="instalacion">Instalación</option>
-          <option value="reparacion">Reparación</option>
-        </select>
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="importe_a_cobrar" className="block text-sm font-medium text-gray-700">
-          Importe a Cobrar
-        </label>
-        <input
-          type="number"
-          id="importe_a_cobrar"
-          value={importeACobrar || ''}
-          onChange={(e) => setImporteACobrar(parseFloat(e.target.value))}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el importe a cobrar (opcional)"
-          disabled={loading}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="fecha_fijada" className="block text-sm font-medium text-gray-700">
-          Fecha Fijada
-        </label>
-        <input
-          type="date"
-          id="fecha_fijada"
-          value={fechaFijada}
-          onChange={(e) => setFechaFijada(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese la fecha fijada (opcional)"
-          disabled={loading}
-        />
-      </div>
-
-
-      <div className="mb-4">
-        <label htmlFor="numero_aviso" className="block text-sm font-medium text-gray-700">
-          Nº de Aviso
-        </label>
-        <input
-          type="text"
-          id="numero_aviso"
-          value={numeroAviso}
-          onChange={(e) => setNumeroAviso(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el Nº de Aviso"
-          disabled={loading}
-          autoComplete="off"
-        />
-      </div>
-      {servicio === 'reparacion' && (
-        <div className="mb-4">
-          <label htmlFor="garantia" className="block text-sm font-medium text-gray-700">
-            Garantía
-          </label>
-          <select
-            id="garantia"
-            value={garantia}
-            onChange={(e) => setGarantia(e.target.value as 'SI' | 'NO' | 'SIN DETERMINAR')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            disabled={loading}
-          >
-            <option value="SI">Sí</option>
-            <option value="NO">No</option>
-            <option value="SIN DETERMINAR">Sin Determinar</option>
-          </select>
-        </div>
-      )}
-      <div className="mb-4 flex items-center">
-        <input
-          type="checkbox"
-          id="terminado"
-          checked={terminado}
-          onChange={(e) => setTerminado(e.target.checked)}
-          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-          disabled={loading}
-        />
-        <label htmlFor="terminado" className="ml-2 block text-sm font-medium text-gray-700">
-          Terminado
-        </label>
-      </div>
-      <div className="mb-4">
-        <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="nombre" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Nombre
         </label>
         <input
@@ -189,14 +81,12 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
           id="nombre"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el nombre"
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
           disabled={loading}
-          autoComplete="name"
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="direccion" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="direccion" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Dirección
         </label>
         <input
@@ -204,108 +94,177 @@ export function PersonaForm({ initialData, onSubmit, submitText, loading }: Pers
           id="direccion"
           value={direccion}
           onChange={(e) => setDireccion(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese la dirección"
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
           disabled={loading}
-          autoComplete="street-address"
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="telefono" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="telefono" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Teléfono
         </label>
         <input
-          type="tel"
+          type="text"
           id="telefono"
           value={telefono}
           onChange={(e) => setTelefono(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el teléfono"
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
           disabled={loading}
-          autoComplete="tel"
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="codigo_postal" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="codigoPostal" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Código Postal
         </label>
         <input
           type="text"
-          id="codigo_postal"
+          id="codigoPostal"
           value={codigoPostal}
           onChange={(e) => setCodigoPostal(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el código postal"
-          disabled={loading}
-          autoComplete="postal-code"
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="modelo_tv" className="block text-sm font-medium text-gray-700">
-          Modelo TV / Soundbar
-        </label>
-        <input
-          type="text"
-          id="modelo_tv"
-          value={modeloTv}
-          onChange={(e) => setModeloTv(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el modelo de TV (opcional)"
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
           disabled={loading}
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="ticket_eci" className="block text-sm font-medium text-gray-700">
-          Ticket ECI
-        </label>
-        <input
-          type="text"
-          id="ticket_eci"
-          value={ticketEci}
-          onChange={(e) => setTicketEci(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese el ticket ECI (opcional)"
-          disabled={loading}
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="descripcion" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Descripción
         </label>
         <textarea
           id="descripcion"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          placeholder="Ingrese la descripción"
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
           disabled={loading}
-          autoComplete="off"
         />
       </div>
-
-      <div className="mb-4 flex items-center">
+      <div className="mb-4">
+        <label htmlFor="importeACobrar" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Importe a Cobrar
+        </label>
         <input
-          type="checkbox"
-          id="soporte_tv"
-          checked={soporteTv}
-          onChange={(e) => setSoporteTv(e.target.checked)}
-          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          type="number"
+          id="importeACobrar"
+          value={importeACobrar}
+          onChange={(e) => setImporteACobrar(Number(e.target.value))}
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
           disabled={loading}
         />
-        <label htmlFor="soporte_tv" className="ml-2 block text-sm font-medium text-gray-700">
+      </div>
+      <div className="mb-4">
+        <label htmlFor="soporteTv" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
           Necesita Soporte TV
         </label>
+        <input
+          type="checkbox"
+          id="soporteTv"
+          checked={soporteTv}
+          onChange={(e) => setSoporteTv(e.target.checked)}
+          className="mt-1 block"
+          disabled={loading}
+        />
       </div>
-
-      <div className="mt-6">
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-indigo-600 text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      <div className="mb-4">
+        <label htmlFor="fechaFijada" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Fecha Fijada
+        </label>
+        <input
+          type="date"
+          id="fechaFijada"
+          value={fechaFijada}
+          onChange={(e) => setFechaFijada(e.target.value)}
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
+          disabled={loading}
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="modeloTv" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Modelo TV
+        </label>
+        <input
+          type="text"
+          id="modeloTv"
+          value={modeloTv}
+          onChange={(e) => setModeloTv(e.target.value)}
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
+          disabled={loading}
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="ticketEci" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Ticket ECI
+        </label>
+        <input
+          type="text"
+          id="ticketEci"
+          value={ticketEci}
+          onChange={(e) => setTicketEci(e.target.value)}
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
+          disabled={loading}
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="servicio" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Servicio
+        </label>
+        <select
+          id="servicio"
+          value={servicio}
+          onChange={(e) => setServicio(e.target.value as 'instalacion' | 'reparacion')}
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white dark:bg-gray-700 text-black dark:text-white"
           disabled={loading}
         >
-          {submitText}
-        </button>
+          <option value="instalacion">Instalación</option>
+          <option value="reparacion">Reparación</option>
+        </select>
       </div>
+      <div className="mb-4">
+        <label htmlFor="garantia" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Garantía
+        </label>
+        <select
+          id="garantia"
+          value={garantia}
+          onChange={(e) => setGarantia(e.target.value as 'SI' | 'NO' | 'SIN DETERMINAR')}
+          className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-white dark:bg-gray-700 text-black dark:text-white"
+          disabled={loading}
+        >
+          <option value="SI">SI</option>
+          <option value="NO">NO</option>
+          <option value="SIN DETERMINAR">SIN DETERMINAR</option>
+        </select>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="terminado" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Terminado
+        </label>
+        <input
+          type="checkbox"
+          id="terminado"
+          checked={terminado}
+          onChange={(e) => setTerminado(e.target.checked)}
+          className="mt-1 block"
+          disabled={loading}
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="numeroAviso" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Número de Aviso
+        </label>
+        <input
+          type="text"
+          id="numeroAviso"
+          value={numeroAviso}
+          onChange={(e) => setNumeroAviso(e.target.value)}
+          className="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-black dark:text-white"
+          disabled={loading}
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full py-2 px-4 bg-blue-600 dark:bg-blue-700 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-800"
+        disabled={loading}
+      >
+        {submitText}
+      </button>
     </form>
   );
 }

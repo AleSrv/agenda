@@ -14,19 +14,15 @@ export function Alta() {
   };
 
   return (
-    <div className="w-full  mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="w-full mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <h2
-        className="text-2xl font-bold mb-6 flex items-center gap-2
-         bg-slate-600 p-2 rounded-lg text-white cursor-pointer
-         hover:bg-slate-700 justify-between
-         "
+        className="text-2xl font-bold mb-6 flex items-center gap-2 bg-slate-600 dark:bg-slate-700 p-2 rounded-lg text-white cursor-pointer hover:bg-slate-700 dark:hover:bg-slate-800 justify-between"
         onClick={() => setShow(!show)}
       >
         <UserPlus className="w-6 h-6" />
-        <p>Agregar Cliente </p><PanelTopOpen className="w-6 h-6" />
+        <p>Agregar Cliente</p>
+        <PanelTopOpen className="w-6 h-6" />
       </h2>
-      <div>
-      </div>
       {show && (
         <PersonaForm
           onSubmit={handleAgregarPersona}
@@ -34,7 +30,6 @@ export function Alta() {
           loading={cargando}
         />
       )}
-
     </div>
   );
 }

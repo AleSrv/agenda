@@ -24,13 +24,13 @@ const Switches: React.FC<SwitchesProps> = ({ onSwitchChange }) => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 bg-white rounded-lg shadow-md mb-4 flex flex-col gap-4">
+    <div className="w-full max-w-2xl mx-auto p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md mb-4 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <span>Ver Pendientes</span>
+        <span className="text-gray-900 dark:text-gray-100">{verPendientes ? 'Pendientes' : 'Todas'}</span>
         <Switch
           checked={verPendientes}
           onChange={(value) => handleSwitchChange('verPendientes', value)}
-          className={`${verPendientes ? 'bg-blue-500' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
+          className={`${verPendientes ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
         >
           <span className="sr-only">Ver Pendientes</span>
           <span
@@ -39,11 +39,11 @@ const Switches: React.FC<SwitchesProps> = ({ onSwitchChange }) => {
         </Switch>
       </div>
       <div className="flex items-center justify-between">
-        <span>Ver Instalaciones</span>
+        <span className="text-gray-900 dark:text-gray-100">Ver Instalaciones</span>
         <Switch
           checked={verInstalaciones}
           onChange={(value) => handleSwitchChange('verInstalaciones', value)}
-          className={`${verInstalaciones ? 'bg-blue-500' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
+          className={`${verInstalaciones ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
         >
           <span className="sr-only">Ver Instalaciones</span>
           <span
@@ -52,11 +52,11 @@ const Switches: React.FC<SwitchesProps> = ({ onSwitchChange }) => {
         </Switch>
       </div>
       <div className="flex items-center justify-between">
-        <span>Ver Reparaciones</span>
+        <span className="text-gray-900 dark:text-gray-100">Ver Reparaciones</span>
         <Switch
           checked={verReparaciones}
           onChange={(value) => handleSwitchChange('verReparaciones', value)}
-          className={`${verReparaciones ? 'bg-blue-500' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
+          className={`${verReparaciones ? 'bg-blue-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full`}
         >
           <span className="sr-only">Ver Reparaciones</span>
           <span

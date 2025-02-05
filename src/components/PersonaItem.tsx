@@ -38,6 +38,7 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
       await handleUpdate({ ...persona, terminado: true, fecha_terminado: fechaTerminado });
     }
   };
+
   const handleshowlist = () => {
     setShowlist(!showlist);
   };
@@ -136,29 +137,34 @@ export function PersonaItem({ persona, onDelete, onUpdate, loading, user }: Pers
           <button
             onClick={() => setIsEditing(true)}
             disabled={loading}
-            className="p-2 text-blue-600 hover:text-blue-900 rounded-full hover:bg-blue-50"
+            className="p-2 text-blue-600 hover:text-blue-900 rounded-full hover:bg-blue-50 flex items-center gap-1"
             title="Editar"
           >
-            <Pencil className="w-5 h-5" />
+            <Pencil className="w-5 h-5" /> 
+            <span>Editar</span>
           </button>
-          <button
-            onClick={handleTerminar}
-            disabled={loading}
-            className="p-2 text-green-600 hover:text-green-900 rounded-full hover:bg-green-50"
-            title="Terminar"
-          >
-            <CheckCircle className="w-5 h-5" />
-          </button>
+
           {user?.email !== "telemalaga@telemalaga.com" && (
             <button
               onClick={handleDelete}
               disabled={loading}
-              className="p-2 text-red-600 hover:text-red-900 rounded-full hover:bg-red-50"
+              className="p-2 text-red-600 hover:text-red-900 rounded-full hover:bg-red-50 flex items-center gap-1"
               title="Eliminar"
             >
               <Trash2 className="w-5 h-5" />
+              <span>Eliminar</span>
             </button>
           )}
+
+          <button
+            onClick={handleTerminar}
+            disabled={loading}
+            className="p-2 text-green-600 hover:text-green-900 rounded-full hover:bg-green-50 flex items-center gap-1"
+            title="Terminar"
+          >
+            <CheckCircle className="w-5 h-5" />
+            <span>Terminar</span>
+          </button>
         </div>
       </div>
       {showlist && (
