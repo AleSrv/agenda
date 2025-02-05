@@ -47,7 +47,7 @@ export function Lista({ user, filterQuery, filters }: ListaProps) {
 
     const matchesFilters = filters.verPendientes
       ? matchesPendientes && (matchesInstalaciones || matchesReparaciones)
-      : matchesInstalaciones || matchesReparaciones;
+      : (filters.verInstalaciones && matchesInstalaciones) || (filters.verReparaciones && matchesReparaciones);
 
     return matchesQuery && matchesFilters;
   });

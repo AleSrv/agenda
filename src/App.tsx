@@ -15,7 +15,7 @@ function App() {
   const [, setLoading] = useState(false);
   const [user, setUser] = useState<AuthenticatedUser | null>(null);
   const [filterQuery, setFilterQuery] = useState('');
-  const [filters, setFilters] = useState({ verPendientes: true, verInstalaciones: false, verReparaciones: false });
+  const [filters, setFilters] = useState({ verPendientes: true, verInstalaciones: true, verReparaciones: true });
 
   const handleLogin = async (username: string, password: string) => {
     setLoading(true);
